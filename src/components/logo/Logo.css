@@ -1,0 +1,7 @@
+.Tilt {
+  transform-style: preserve-3d;
+}
+
+.Tilt-inner {
+  transform: translateZ(20px);
+}
