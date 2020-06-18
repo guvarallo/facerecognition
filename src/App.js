@@ -25,15 +25,6 @@ const particlesSettings = {
       }
     }
   },
-  interactivity: {
-    detect_on: 'canvas',
-    events: {
-      onhover: {
-        enable: true,
-        mode: 'repulse'
-      },
-    }
-  }
 }
 
 function App() {
