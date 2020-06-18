@@ -51,13 +51,14 @@ function App() {
   }
 
   function faceBox(data) {
+    console.log(data)
     const image = document.getElementById('img');
     const height = image.height;
     const width = image.width;
-    const top = parseInt(data.top_row * height) + 'px';
-    const left = parseInt(data.left_col * width) + 'px';
-    const bottom = height - (parseInt(data.bottom_row * height)) + 'px';
-    const right = width - (parseInt(data.right_col * width)) + 'px';
+    const top = parseInt(data.top_row * height);
+    const left = parseInt(data.left_col * width);
+    const bottom = height - (parseInt(data.bottom_row * height));
+    const right = width - (parseInt(data.right_col * width));
     setBox({...box,
       top: top,
       left: left,
