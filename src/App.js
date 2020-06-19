@@ -30,12 +30,7 @@ const particlesSettings = {
 function App() {
   const [input, setInput] = useState('');
   const [url, setUrl] = useState('');
-  const [box, setBox] = useState({ 
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  });
+  const [box, setBox] = useState([]);
 
   function handleInputChange(event) {
     setInput(event.target.value);
@@ -46,28 +41,23 @@ function App() {
 
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', input)
-      .then(response => faceBox((response.outputs[0].data.regions[0].region_info.bounding_box)))
+      .then(response => handleResponse((response.outputs[0].data.regions)))
       .catch(err => alert('Please insert a valid image URL - ' + err));
   }
 
-  function faceBox(data) {
-    console.log(data)
+  function handleResponse(resp) {
+    const info = resp.map(e => e.region_info.bounding_box);
     const image = document.getElementById('img');
     const height = image.height;
     const width = image.width;
-    const top = parseInt(data.top_row * height);
-    const left = parseInt(data.left_col * width);
-    const bottom = height - (parseInt(data.bottom_row * height));
-    const right = width - (parseInt(data.right_col * width));
-    setBox({...box,
-      top: top,
-      left: left,
-      bottom: bottom,
-      right: right,
-    });
-  }
 
-  console.log(box);
+    return info.map(face => {
+      return setBox(oldBox => [...oldBox, {top: parseInt(face.top_row * height),
+                                          left: parseInt(face.left_col * width),
+                                          bottom: height - (parseInt(face.bottom_row * height)),
+                                          right: width - (parseInt(face.right_col * width))}]);
+      });
+  }
 
   return (
     <div className="App">
