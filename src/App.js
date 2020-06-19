@@ -7,9 +7,10 @@ import Rank from './components/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Clarifai from 'clarifai';
+import apiConfig from './apiKeys';
 
-const app = new Clarifai.App({
-  apiKey: '78d528812599487e96494d1858567da5'
+const app = new Clarifai.App({ 
+  apiKey: `${apiConfig.apiKey}`
  });
 
 const particlesSettings = {
