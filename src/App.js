@@ -3,7 +3,8 @@ import './App.css';
 import Navigation from './components/Navigation';
 import Particles from 'react-particles-js';
 import Logo from './components/logo/Logo';
-import Rank from './components/Rank';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Clarifai from 'clarifai';
@@ -32,6 +33,8 @@ function App() {
   const [input, setInput] = useState('');
   const [url, setUrl] = useState('');
   const [box, setBox] = useState([]);
+  const [route, setRoute] = useState('home');
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   function handleInputChange(event) {
     setInput(event.target.value);
@@ -43,6 +46,7 @@ function App() {
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', input)
       .then(response => handleResponse((response.outputs[0].data.regions)))
+      .then(setBox([])) // Needed to empty the box infos from past pics
       .catch(err => alert('Please insert a valid image URL - ' + err));
   }
 
@@ -51,8 +55,7 @@ function App() {
     const image = document.getElementById('img');
     const height = image.height;
     const width = image.width;
-
-    return info.map(face => {
+    info.map(face => {
       return setBox(oldBox => [...oldBox, {top: parseInt(face.top_row * height),
                                           left: parseInt(face.left_col * width),
                                           bottom: height - (parseInt(face.bottom_row * height)),
@@ -60,15 +63,31 @@ function App() {
       });
   }
 
+  function handleRouteChange(route) {
+    if (route === 'signin') {
+      setIsSignedIn(false);
+    } else if (route === 'home') {
+      setIsSignedIn(true);
+    }
+    setRoute(route);
+  }
+
   return (
     <div className="App">
-      <Navigation />
+      <Navigation handleRouteChange={handleRouteChange} isSignedIn={isSignedIn}/>
       <Particles className='particles' params={particlesSettings} />
       <Logo />
-      <Rank />
-      {/* Have to add value={input} below for the input to be captured */}
-      <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
-      <FaceRecognition url={url} box={box}/>
+      {route === 'home'
+      ? <div>
+          <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
+          <FaceRecognition url={url} box={box}/>
+        </div>
+      : (
+          route === 'signin'
+          ? <SignIn handleRouteChange={handleRouteChange}/> 
+          : <SignUp handleRouteChange={handleRouteChange}/>
+        )
+      }
     </div>
   );
 }
