@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation/Navigation';
 import Particles from 'react-particles-js';
-import Logo from './components/logo/Logo';
+import Logo from './components/Logo/Logo';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import Rank from './components/Rank';
+import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Clarifai from 'clarifai';
@@ -104,10 +104,12 @@ function App() {
     <div className="App">
       {isSignedIn 
       ? <Navigation handleRouteChange={handleRouteChange} isSignedIn={isSignedIn} route={route} />
-      : ''
+      : <div> 
+          <h1 className='f1 tc purple'><Logo />Welcome to Face Recon!</h1>
+          <h3 className='f4 tc purple'>The app that recognizes faces of an image URL.</h3>
+        </div>
       }
       <Particles className='particles' params={particlesSettings} />
-      <Logo />
       {route === 'home'
       ? <div>
           <Rank

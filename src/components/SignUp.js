@@ -38,9 +38,7 @@ function SignUp({ handleRouteChange, loadUser }) {
   }
 
   return (
-    <div>
-      <h1 className='f1 tc purple'>Welcome to Face Recon!</h1>
-      <h3 className='f4 tc purple'>The app that recognizes faces of an image URL.</h3>
+    <div className='mt5'>
       <article className="ba dark-gray b--black-10 w-100 w-50-m w-25-l pa4 mv4 shadow-5 center">
         <div className="">
           <form className="w-100" >

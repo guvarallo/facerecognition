@@ -1,12 +1,14 @@
 import React from 'react';
+import './Rank.css'
 
 function Rank({ name, entries}) {
   return (
-    <div>
+    <div className='rank'>
       <h1 className='f1 tc purple'>
-        {`Hi ${name}! Your current entry count is...`}
+        {`Hi ${name}!`}
       </h1>
-      <div className='f1 tc purple'>
+      <h2 className='f2 tc purple'>Your current entry is:</h2>
+      <div className='f2 tc purple'>
         {entries}
       </div>
     </div>
