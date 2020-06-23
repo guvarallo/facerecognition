@@ -72,6 +72,8 @@ function App() {
               id: user.id
             })
           })
+          .then(response => response.json())
+          .then(count => setUser(user => ({...user, entries: count})))
         }
       })
       .then(setBox([])) // Needed to empty the box infos from past pics

@@ -6,7 +6,7 @@ function Rank({ name, entries}) {
       <h1 className='f1 tc purple'>
         {`Hi ${name}!`}
       </h1>
-      <h2 className='f2 tc purple'>Your current entry is:</h2>
+      <h2 className='f2 tc purple'>Your current entry count is:</h2>
       <div className='f2 tc purple'>
         {entries}
       </div>
