@@ -1,7 +1,7 @@
 import React from 'react';
 import './ImageLinkForm.css';
 
-function ImageLinkForm({ handleInputChange, handleSubmit, handleRouteChange }) {
+function ImageLinkForm({ handleInputChange, handleSubmit }) {
   return (
     <div>
       <h1 className='f1 tc purple'>Welcome to Face Recon!</h1>

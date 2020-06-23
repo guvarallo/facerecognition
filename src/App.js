@@ -33,7 +33,7 @@ function App() {
   const [input, setInput] = useState('');
   const [url, setUrl] = useState('');
   const [box, setBox] = useState([]);
-  const [route, setRoute] = useState('home');
+  const [route, setRoute] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(true);
 
   function handleInputChange(event) {
@@ -42,7 +42,6 @@ function App() {
 
   function handleSubmit() {
     setUrl(input);
-
     app.models
       .predict('a403429f2ddf4b49b307e318f00e528b', input)
       .then(response => handleResponse((response.outputs[0].data.regions)))
