@@ -112,6 +112,7 @@ function App() {
       <Particles className='particles' params={particlesSettings} />
       {route === 'home'
       ? <div>
+          <Logo />
           <Rank
             name={user.name}
             entries={user.entries}
