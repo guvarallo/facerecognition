@@ -65,7 +65,7 @@ function App() {
       .then(response => {
         handleResponse((response.outputs[0].data.regions));
         if(response) {
-          fetch('http://localhost:3001/image', {
+          fetch('http://localhost:3000/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

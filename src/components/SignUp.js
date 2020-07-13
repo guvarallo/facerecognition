@@ -19,7 +19,7 @@ function SignUp({ handleRouteChange, loadUser }) {
 
   function handleSubmitSignUp(event) {
     event.preventDefault();
-    fetch('http://localhost:3001/signup', {
+    fetch('http://localhost:3000/signup', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
