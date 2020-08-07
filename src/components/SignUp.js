@@ -35,6 +35,7 @@ function SignUp({ handleRouteChange, loadUser, loadGuest }) {
         handleRouteChange('home');
       }
     })
+    .catch(err => console.log(err))
   }
 
   return (

@@ -8,12 +8,6 @@ import SignUp from './components/SignUp';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Clarifai from 'clarifai';
-import apiConfig from './apiKeys';
-
-const app = new Clarifai.App({ 
-  apiKey: `${apiConfig.apiKey}`
- });
 
 const particlesSettings = {
   particles: {
@@ -73,8 +67,14 @@ function App() {
 
   function handleSubmit() {
     setUrl(input);
-    app.models
-      .predict('a403429f2ddf4b49b307e318f00e528b', input)
+      fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: input
+        })
+      })
+      .then(response => response.json())
       .then(response => {
         handleResponse((response.outputs[0].data.regions));
         if(response) {
@@ -87,6 +87,7 @@ function App() {
           })
           .then(response => response.json())
           .then(count => setUser(user => ({...user, entries: count})))
+          .catch(err => console.log(err))
         }
       })
       .then(setBox([])) // Needed to empty the boxes infos from past pics
@@ -111,6 +112,8 @@ function App() {
       setIsSignedIn(false);
       setIsGuest(false);
       setUrl('');
+      setInput('');
+      setBox([]);
     } else if (route === 'home') {
       setIsSignedIn(true);
     }

@@ -29,6 +29,7 @@ function SignIn({ handleRouteChange, loadUser }) {
         handleRouteChange('home');
       }
     })
+    .catch(err => console.log('no user id: ' + err))
   }
 
   return (
