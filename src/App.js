@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Particles from 'react-particles-js';
@@ -34,7 +34,7 @@ function App() {
   const [input, setInput] = useState('');
   const [url, setUrl] = useState('');
   const [box, setBox] = useState([]);
-  const [route, setRoute] = useState('');
+  const [route, setRoute] = useState('signin');
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [user, setUser] = useState({
     id: '',
@@ -42,6 +42,12 @@ function App() {
     email: '',
     entries: 0,
     joined: ''
+  });
+
+  useEffect(() => {
+    fetch('http://localhost:3000')
+      .then(response => response.json())
+      .then(data => console.log);
   });
 
   function loadUser(data) {
