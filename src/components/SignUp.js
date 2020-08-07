@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SignUp({ handleRouteChange, loadUser }) {
+function SignUp({ handleRouteChange, loadUser, loadGuest }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
@@ -62,6 +62,7 @@ function SignUp({ handleRouteChange, loadUser }) {
             </div>
             <div className="lh-copy mt3">
               <a onClick={() => handleRouteChange('signin')} href="#0" className="f6 link dim black db b hover-white">Already registered? Sign in here!</a>
+              <a onClick={() => loadGuest()} href="#0" className="f6 link dim black db b hover-white">Or just enter as a guest over here!</a>
             </div>
           </form>
         </div>

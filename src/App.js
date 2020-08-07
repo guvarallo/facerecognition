@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Particles from 'react-particles-js';
@@ -34,20 +34,15 @@ function App() {
   const [input, setInput] = useState('');
   const [url, setUrl] = useState('');
   const [box, setBox] = useState([]);
-  const [route, setRoute] = useState('signin');
+  const [route, setRoute] = useState('signup');
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   const [user, setUser] = useState({
     id: '',
     name: '',
     email: '',
     entries: 0,
     joined: ''
-  });
-
-  useEffect(() => {
-    fetch('http://localhost:3000')
-      .then(response => response.json())
-      .then(data => console.log);
   });
 
   function loadUser(data) {
@@ -58,6 +53,18 @@ function App() {
       entries: data.entries,
       joined: data.joined
     });
+  }
+
+  function loadGuest() {
+    setIsGuest(true);
+    setUser({
+      id: '',
+      name: 'Guest',
+      email: '',
+      entries: 0,
+      joined: ''
+    });
+    handleRouteChange('home');
   }
 
   function handleInputChange(event) {
@@ -82,7 +89,7 @@ function App() {
           .then(count => setUser(user => ({...user, entries: count})))
         }
       })
-      .then(setBox([])) // Needed to empty the box infos from past pics
+      .then(setBox([])) // Needed to empty the boxes infos from past pics
       .catch(err => alert('Please insert a valid image URL - ' + err));
   }
 
@@ -102,6 +109,8 @@ function App() {
   function handleRouteChange(route) {
     if (route === 'signin') {
       setIsSignedIn(false);
+      setIsGuest(false);
+      setUrl('');
     } else if (route === 'home') {
       setIsSignedIn(true);
     }
@@ -118,7 +127,7 @@ function App() {
         </div>
       }
       <Particles className='particles' params={particlesSettings} />
-      {route === 'home'
+      {route === 'home' && !isGuest
       ? <div>
           <Logo />
           <Rank
@@ -128,10 +137,17 @@ function App() {
           <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
           <FaceRecognition url={url} box={box}/>
         </div>
+      : route === 'home' && isGuest 
+      ? <div>
+          <h1 className='f1 tc purple'><Logo />Hi {user.name}!</h1>
+          <h3 className='f4 tc purple'>Want to track your entries? Sign out and register!</h3>
+          <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
+          <FaceRecognition url={url} box={box}/>
+        </div>
       : (
           route === 'signin'
           ? <SignIn handleRouteChange={handleRouteChange} loadUser={loadUser} /> 
-          : <SignUp handleRouteChange={handleRouteChange} loadUser={loadUser} />
+          : <SignUp handleRouteChange={handleRouteChange} loadUser={loadUser} loadGuest={loadGuest} />
         )
       }
     </div>

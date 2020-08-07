@@ -24,7 +24,6 @@ function SignIn({ handleRouteChange, loadUser }) {
     })
     .then(response => response.json())
     .then(user => {
-      console.log(user.id)
       if(user.id) {
         loadUser(user);
         handleRouteChange('home');
