@@ -2,6 +2,8 @@
 
 Face Recon is an app that recongnizes faces in any picture URL using the Clarifai API.
 
+See it live over here - [Face Recon Website](https://face-recon-app.herokuapp.com/)
+
 ## Getting Started
 
 This app needs its backend to function properly. 
