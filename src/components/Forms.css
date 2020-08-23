@@ -1,0 +1,10 @@
+p {
+  color: #5e2ca5;
+  font-weight: bold;
+}
+
+p::before {
+  display: inline;
+  content: "⚠ ";
+  font-weight: bold;
+}
