@@ -67,27 +67,27 @@ function App() {
 
   function handleSubmit() {
     setUrl(input);
-      fetch('https://thawing-caverns-91691.herokuapp.com/imageurl', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          input: input
-        })
+    fetch('https://thawing-caverns-91691.herokuapp.com/imageurl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: input
       })
+    })
       .then(response => response.json())
       .then(response => {
         handleResponse((response.outputs[0].data.regions));
-        if(response) {
+        if (response) {
           fetch('https://thawing-caverns-91691.herokuapp.com/image', {
             method: 'put',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               id: user.id
             })
           })
-          .then(response => response.json())
-          .then(count => setUser(user => ({...user, entries: count})))
-          .catch(err => console.log(err))
+            .then(response => response.json())
+            .then(count => setUser(user => ({ ...user, entries: count })))
+            .catch(err => console.log(err))
         }
       })
       .then(setBox([])) // Needed to empty the boxes infos from past pics
@@ -100,11 +100,13 @@ function App() {
     const height = image.height;
     const width = image.width;
     info.map(face => {
-      return setBox(oldBox => [...oldBox, {top: parseInt(face.top_row * height),
-                                          left: parseInt(face.left_col * width),
-                                          bottom: height - (parseInt(face.bottom_row * height)),
-                                          right: width - (parseInt(face.right_col * width))}]);
-      });
+      return setBox(oldBox => [...oldBox, {
+        top: parseInt(face.top_row * height),
+        left: parseInt(face.left_col * width),
+        bottom: height - (parseInt(face.bottom_row * height)),
+        right: width - (parseInt(face.right_col * width))
+      }]);
+    });
   }
 
   function handleRouteChange(route) {
@@ -122,36 +124,45 @@ function App() {
 
   return (
     <div className="App">
-      {isSignedIn 
-      ? <Navigation handleRouteChange={handleRouteChange} isSignedIn={isSignedIn} route={route} />
-      : <div> 
+      {isSignedIn
+        ? <Navigation
+          handleRouteChange={handleRouteChange}
+          isSignedIn={isSignedIn}
+          route={route} />
+        : <div>
           <h1 className='f1 tc purple'><Logo />Welcome to Face Recon!</h1>
           <h3 className='f4 tc purple'>The app that recognizes faces of an image URL.</h3>
         </div>
       }
       <Particles className='particles' params={particlesSettings} />
       {route === 'home' && !isGuest
-      ? <div>
+        ? <div>
           <Logo />
           <Rank
             name={user.name}
             entries={user.entries}
           />
-          <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
-          <FaceRecognition url={url} box={box}/>
+          <ImageLinkForm
+            value={input}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit} />
+          <FaceRecognition url={url} box={box} />
         </div>
-      : route === 'home' && isGuest 
-      ? <div>
-          <h1 className='f1 tc purple'><Logo />Hi {user.name}!</h1>
-          <h3 className='f4 tc purple'>Want to track your entries? Sign out and register!</h3>
-          <ImageLinkForm value={input} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
-          <FaceRecognition url={url} box={box}/>
-        </div>
-      : (
-          route === 'signin'
-          ? <SignIn handleRouteChange={handleRouteChange} loadUser={loadUser} /> 
-          : <SignUp handleRouteChange={handleRouteChange} loadUser={loadUser} loadGuest={loadGuest} />
-        )
+        : route === 'home' && isGuest
+          ? <div>
+            <h1 className='f1 tc purple'><Logo />Hi {user.name}!</h1>
+            <h3 className='f4 tc purple'>Want to track your entries? Sign out and register!</h3>
+            <ImageLinkForm
+              value={input}
+              handleInputChange={handleInputChange}
+              handleSubmit={handleSubmit} />
+            <FaceRecognition url={url} box={box} />
+          </div>
+          : (
+            route === 'signin'
+              ? <SignIn handleRouteChange={handleRouteChange} loadUser={loadUser} />
+              : <SignUp handleRouteChange={handleRouteChange} loadUser={loadUser} loadGuest={loadGuest} />
+          )
       }
     </div>
   );
