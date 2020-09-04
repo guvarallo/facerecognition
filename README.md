@@ -4,6 +4,12 @@ Face Recon is an app that recongnizes faces in any picture URL using the Clarifa
 
 See it live over here - [Face Recon Website](https://face-recon-app.herokuapp.com/)
 
+## Demo
+
+Check the demo below:
+
+![Face Recon App Demo](demo/demo.gif)
+
 ## Getting Started
 
 This app needs its backend to function properly. 
